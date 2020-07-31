@@ -1,7 +1,6 @@
-# Ifrit
-## Wildfire Prediction Model
+# Ifrit Wildfire Prediction Model
 
-The Ifrit prediction model is naive wildfire assessment algorithm based on MODIS and LANDSAT imagery.
+A naive wildfire assessment algorithm based on MODIS and LANDSAT imagery.
 
 ## Platform
 Currently, Ifrit is a native app to the Google Earth Engine cloud service.
