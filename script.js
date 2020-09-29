@@ -11,7 +11,6 @@ var DATE_START = addDays(Date.now(), -365);
 var DATE_END = Date.now();
 var SELECTED_DATE = Date.now();
 var DATE_TEST = Date.parse('2019-01-01');
-var HIGHLIGHT = 'red';
 
 // DATA SOURCES //
 // USGS Land Cover Map
@@ -37,6 +36,7 @@ litterButton.onClick( function() {
 var forestButton = ui.Button('FOREST DENSITY');
 forestButton.onClick( function() {
   var forestImage = getForestImage(SELECTED_DATE, WESTERN);
+  display(forestImage);
 });
 
 // Display GUI
@@ -63,13 +63,9 @@ function getArea(image, geometry) {
   return areaPixels;
 }
 
-function display(image) {
+function display(object) {
   // Display map with highlighted areas
-  var visParams = {
-    palette: HIGHLIGHT,
-    opacity: 0.5
-  };
-  Map.addLayer( image, visParams, 'highTemps');
+  Map.addLayer( object.image, object.vis, object.name);
 }
 
 function displayHighRiskAreas(date, geometry) {
@@ -177,12 +173,16 @@ function getForestImage(date, geometry) {
       .filterDate(HERBACEOUS_DATE, addDays(HERBACEOUS_DATE, 365))
       .select('percent_tree_cover')
       .first();
+      
+  var visParams = {
+    palette: HIGHLIGHT,
+    opacity: 0.5
+  };
 
   print('Forest Cover: ');
   print(forest);
-  Map.addLayer(forest, {palette: ['white', 'green'], max: 80}, 'forested areas');
   
-  //return forest;
+  return forest;
 }
 
 function getBurnedImage(date, geometry) {
