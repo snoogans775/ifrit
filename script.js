@@ -72,18 +72,16 @@ function display(image) {
   Map.addLayer( image, visParams, 'highTemps');
 }
 
-function displayTest(date, geometry) {
-  var atRiskImage = getHighRiskImage(date, geometry).clip(geometry);
-  var burnedImage = getBurnedImage(date, geometry).clip(geometry);
+function displayHighRiskAreas(date, geometry) {
+  var highRiskImageObject = getHighRiskImageObject(date, geometry);
   
-  var totalAtRisk = getArea(atRiskImage, geometry);
-  var totalBurned = getArea(burnedImage, geometry);
-  var totalAccurate = getArea( atRiskImage.mask(burnedImage));
+  display(highRiskImageObject);
+}
+
+function displayBurnedAreas(date, geometry) {
+  var burnedImageObject = getBurnedImageObject(date, geometry);
   
-  HIGHLIGHT = 'blue';
-  display(atRiskImage);
-  HIGHLIGHT = 'red';
-  display(burnedImage);
+  display(burnedImageObject);
 }
 
 function addDays(date, days) {
