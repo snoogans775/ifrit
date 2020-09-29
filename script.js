@@ -28,12 +28,11 @@ dateSlider.onChange( function() {
 // Construct Buttons
 var testButton = ui.Button('BURNED AREAS');
 testButton.onClick( function() {
-  displayTest(DATE_TEST, WESTERN);
+  displayBurnedAreas(DATE_TEST, WESTERN);
 });
 var litterButton = ui.Button('AT RISK AREAS');
 litterButton.onClick( function() {
-  var highRiskImage = getHighRiskImage(SELECTED_DATE, WESTERN);
-  display(highRiskImage);
+  displayHighRiskAreas(SELECTED_DATE, WESTERN);
 });
 var forestButton = ui.Button('FOREST DENSITY');
 forestButton.onClick( function() {
