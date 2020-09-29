@@ -97,7 +97,7 @@ function parseUTC(timestamp) {
 
 // ImageCollection Functions //
 
-function getHighRiskImage(date, geometry) {
+function getHighRiskImageObject(date, geometry) {
 
   var groundLitter = getLitterImage(date, geometry);
   var hotSpots = getTemperatureImage(date, geometry);
@@ -105,7 +105,44 @@ function getHighRiskImage(date, geometry) {
   // Define intersection of shrub and high temperature
   var shrubAtHighRisk = hotSpots.mask( groundLitter ).gt(1);
   
-  return shrubAtHighRisk;
+  // Clip image to geometry
+  var clippedImage = shrubAtHighRisk.clip(geometry);
+  
+  // Define visualization parameters
+  var visParams = {
+    palette: 'blue',
+    opacity: 0.5
+  };
+  
+  var object = {
+		image: clippedImage,
+		vis: visParams,
+		name: "High Risk Shrubland"
+	};
+	
+	return object;
+}
+
+function getBurnedImageObject(date, geometry) {
+  var burnedImage = ee.ImageCollection('MODIS/006/MOD14A1')
+    .filterBounds(geometry)
+    .filterDate(addDays(date, -365), date)
+    .select('MaxFRP')
+    .max()
+    .clip(geometry);
+    
+  var visParams = {
+    palette: 'red',
+    opacity: 0.5
+  };
+  
+  var object = {
+    image: burnedImage,
+    vis: visParams,
+    name: "Areas burned within 365 days"
+  }
+    
+  return object;
 }
 
 function getTemperatureImage(temperatureDate, geometry) {
